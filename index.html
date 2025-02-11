@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            background-color: green;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .logo {
+            width: 600px;
+            height: 600px;
+            object-fit: contain;
+        }
+
+        .animated-text {
+            animation: pulse 1s infinite;
+            color: white;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .language-selector {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #langSelect {
+            padding: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #flagImage {
+            width: 30px;
+            height: 20px;
+            object-fit: cover;
+        }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: green;
+            width: 10cm;
+            height: 9cm;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .dialog-button {
+            display: block;
+            width: 7cm;
+            height: 1.5cm;
+            margin: 10px auto;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <img src="icon.png" alt="Logo" class="logo">
+        <h1 class="animated-text">Нажмите чтобы нажать</h1>
+        <div class="language-selector">
+            <select id="langSelect">
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+                <option value="tr">Türkçe</option>
+                <option value="kz">Қазақша</option>
+            </select>
+            <img id="flagImage" src="en.png" alt="Flag">
+        </div>
+    </div>
+    <div class="dialog" id="dialog">
+        <button class="dialog-button">Меню</button>
+        <button class="dialog-button" onclick="openNewWindow()">Отзывы</button>
+    </div>
+    <script>
+        const langSelect = document.getElementById('langSelect');
+        const flagImage = document.getElementById('flagImage');
+
+        langSelect.addEventListener('change', (e) => {
+            flagImage.src = `${e.target.value}.png`;
+        });
+
+        const dialog = document.getElementById('dialog');
+        let isDialogOpen = false;
+
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('.dialog') || e.target.closest('.language-selector')) return;
+
+            if (isDialogOpen) {
+                dialog.style.display = 'none';
+                isDialogOpen = false;
+            } else {
+                dialog.style.display = 'block';
+                isDialogOpen = true;
+            }
+        });
+
+        // Remove white background from logo
+        const logo = document.querySelector('.logo');
+        logo.style.backgroundColor = 'transparent';
+
+        function openNewWindow() {
+            window.open('new_window.html', '_blank');
+        }
+    </script>
+</body>
+</html>
