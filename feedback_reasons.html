@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Причины отзыва</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .top-panel {
+            background-color: #4CAF50;
+            height: 3cm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .logo {
+            height: 2.5cm;
+            width: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1cm 10px;
+            overflow-y: auto;
+        }
+
+        .main-text {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 1cm;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5cm;
+        }
+
+        .reason-btn {
+            width: 100%;
+            max-width: 10cm;
+            min-height: 1.5cm;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            word-wrap: break-word;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .reason-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.02);
+        }
+
+        .reason-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 600px) {
+            .main-text {
+                font-size: 24px;
+            }
+            .reason-btn {
+                font-size: 16px;
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-panel">
+            <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+            <img src="icon.png" alt="Логотип" class="logo">
+        </div>
+        <div class="main-content">
+            <p class="main-text">Что вас сегодня расстроило?</p>
+            <div class="buttons-container">
+                <button class="reason-btn" onclick="openFeedbackComment('ВКУС И КАЧЕСТВО')">ВКУС И КАЧЕСТВО</button>
+                <button class="reason-btn" onclick="openFeedbackComment('СКОРОСТЬ ОБСЛУЖИВАНИЯ')">СКОРОСТЬ ОБСЛУЖИВАНИЯ</button>
+                <button class="reason-btn" onclick="openFeedbackComment('ПЕРСОНАЛ')">ПЕРСОНАЛ</button>
+                <button class="reason-btn" onclick="openFeedbackComment('ГИГИЕНА')">ГИГИЕНА</button>
+                <button class="reason-btn" onclick="openFeedbackComment('Enes boqtadi')">Enes boqtadi</button>
+                <button class="reason-btn" onclick="openFeedbackComment('ДРУГОЕ (ПРЕДЛОЖЕНИЕ)')">ДРУГОЕ (ПРЕДЛОЖЕНИЕ)</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function openFeedbackComment(reason) {
+            localStorage.setItem('selectedReason', reason);
+            window.location.href = 'feedback_comment.html';
+        }
+    </script>
+</body>
+</html>

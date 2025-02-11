@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контактная информация</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .top-panel {
+            background-color: #4CAF50;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .logo {
+            height: 2.5rem;
+            width: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 10px;
+            overflow-y: auto;
+        }
+
+        .main-text {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%;
+            max-width: 300px;
+            height: 2.5rem;
+            margin-bottom: 0.8rem;
+            padding: 0 15px;
+            font-size: 1rem;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #45a049;
+        }
+
+        .input-field::placeholder {
+            color: #999;
+        }
+
+        .continue-btn {
+            width: 100%;
+            max-width: 300px;
+            height: 2.5rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .continue-btn:hover {
+            background-color: #45a049;
+        }
+
+        .continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        .privacy-text {
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0 1rem;
+            color: #666;
+        }
+
+        @media (min-width: 768px) {
+            .top-panel {
+                height: 4rem;
+            }
+
+            .logo {
+                height: 3.5rem;
+            }
+
+            .main-text {
+                font-size: 1.5rem;
+            }
+
+            .input-field, .continue-btn {
+                max-width: 400px;
+                height: 3rem;
+            }
+
+            .continue-btn {
+                font-size: 1.2rem;
+            }
+
+            .privacy-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-panel">
+            <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+            <img src="icon.png" alt="Логотип" class="logo">
+        </div>
+        <div class="main-content">
+            <p class="main-text">ПОЖАЛУЙСТА, ЗАПОЛНИТЕ ИНФОРМАЦИЮ ЧТОБЫ МЫ БЫСТРО РЕАГИРОВАЛИ!</p>
+            <input type="tel" class="input-field" placeholder="Мобильный" id="mobileInput">
+            <input type="text" class="input-field" placeholder="Фамилия имя" id="nameInput">
+            <button class="continue-btn" onclick="submitFeedback()">Продолжить</button>
+            <p class="privacy-text">Мы обрабатываем данные, которыми вы поделились с нами, от имени Travelers coffee и не передаем ваши данные третьим лицам, кроме этой компании.</p>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function submitFeedback() {
+            const mobile = document.getElementById('mobileInput').value;
+            const name = document.getElementById('nameInput').value;
+
+            if (!mobile || !name) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+
+            const reason = localStorage.getItem('selectedReason') || 'Не указана';
+            const comment = localStorage.getItem('userComment') || 'Нет комментария';
+
+            const message = `Новый отзыв:\nПричина: ${reason}\nКомментарий: ${comment}\nИмя: ${name}\nТелефон: ${mobile}`;
+
+            // Здесь можно добавить код для отправки сообщения
+            console.log('Отправка сообщения:', message);
+
+            // Переход на страницу благодарности
+            window.location.href = 'feedback_thank_you.html';
+        }
+    </script>
+</body>
+</html>

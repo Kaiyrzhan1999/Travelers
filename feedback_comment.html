@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оставьте комментарий</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .top-panel {
+            background-color: #4CAF50;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .logo {
+            height: 2.5rem;
+            width: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 10px;
+            overflow-y: auto;
+        }
+
+        .main-text {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .comment-box {
+            width: 100%;
+            max-width: 400px;
+            height: 150px;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            resize: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-box:focus {
+            outline: none;
+            border-color: #45a049;
+        }
+
+        .comment-box::placeholder {
+            color: #999;
+        }
+
+        .continue-btn {
+            width: 100%;
+            max-width: 400px;
+            height: 3rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .continue-btn:hover {
+            background-color: #45a049;
+        }
+
+        .continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (min-width: 768px) {
+            .top-panel {
+                height: 4rem;
+            }
+
+            .logo {
+                height: 3.5rem;
+            }
+
+            .main-text {
+                font-size: 1.8rem;
+            }
+
+            .comment-box {
+                height: 200px;
+                font-size: 1.1rem;
+            }
+
+            .continue-btn {
+                height: 3.5rem;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-panel">
+            <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+            <img src="icon.png" alt="Логотип" class="logo">
+        </div>
+        <div class="main-content">
+            <p class="main-text">ВАШИ КОММЕНТАРИИ МНОГО ЗНАЧАТ ДЛЯ НАС!</p>
+            <textarea class="comment-box" placeholder="Комментарий оставьте здесь" id="commentText"></textarea>
+            <button class="continue-btn" onclick="saveCommentAndContinue()">Продолжить</button>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function saveCommentAndContinue() {
+            const comment = document.getElementById('commentText').value;
+            localStorage.setItem('userComment', comment);
+            window.location.href = 'feedback_contact.html';
+        }
+
+        // Восстановление комментария при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedComment = localStorage.getItem('userComment');
+            if (savedComment) {
+                document.getElementById('commentText').value = savedComment;
+            }
+        });
+    </script>
+</body>
+</html>
