@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контактная информация</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         body, html {
             margin: 0;
@@ -22,12 +23,27 @@
         }
 
         .top-panel {
-            background-color: #4CAF50;
+            background-color: orange;
+            background-image: url('element.png');
+            background-size: 20%;
+            background-position: center;
+            background-repeat: repeat;
             height: 3rem;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+        }
+
+        .top-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 165, 0, 0.9);
+            z-index: 0;
         }
 
         .back-button {
@@ -43,8 +59,10 @@
         }
 
         .logo {
-            height: 2.5rem;
+            height: 3rem;
             width: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .main-content {
@@ -175,11 +193,16 @@
 
             const message = `Новый отзыв:\nПричина: ${reason}\nКомментарий: ${comment}\nИмя: ${name}\nТелефон: ${mobile}`;
 
-            // Здесь можно добавить код для отправки сообщения
-            console.log('Отправка сообщения:', message);
-
-            // Переход на страницу благодарности
-            window.location.href = 'feedback_thank_you.html';
+            axios.post('http://localhost:3000/send-notification', { message: message })
+                .then(function (response) {
+                    console.log('Уведомление отправлено:', response.data);
+                    // Переход на страницу благодарности после успешной отправки
+                    window.location.href = 'feedback_thank_you.html';
+                })
+                .catch(function (error) {
+                    console.error('Ошибка при отправке уведомления:', error);
+                    alert('Произошла ошибка при отправке отзыва. Пожалуйста, попробуйте еще раз.');
+                });
         }
     </script>
 </body>
