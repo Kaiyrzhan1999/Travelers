@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travellers Coffee Design</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+
+        :root {
+            --primary-color: #FF8C00;
+            --secondary-color: #8B4513;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --background-color: #FF8C00;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            overflow: hidden;
+        }
+
+        .design-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('element.png');
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.1;
+            mix-blend-mode: multiply;
+            animation: backgroundMove 60s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-color);
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .logo {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 0.4cm;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tagline {
+            font-size: 2.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        .tagline span {
+            display: block;
+            font-size: 0.6em;
+            font-weight: 700;
+            margin-top: 20px;
+            color: var(--accent-color);
+            letter-spacing: 8px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .coffee-bean {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transform: rotate(45deg);
+            animation: fallBean 5s linear;
+        }
+
+        @keyframes fallBean {
+            0% { transform: translateY(-50px) rotate(45deg); }
+            100% { transform: translateY(calc(100vh + 50px)) rotate(405deg); }
+        }
+
+        .social-icons {
+            margin-top: 0.4cm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+            background-color: var(--text-color);
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+
+        .twitter-icon {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .facebook-icon {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .instagram-icon {
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 2H8C5.79 2 4 3.79 4 6v12c0 2.21 1.79 4 4 4h8c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4zm-4 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm4-9c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .social-text {
+            margin-left: 20px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: var(--text-color);
+            font-size: 1em;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 2em;
+            }
+
+            .coffee-bean {
+                width: 15px;
+                height: 22px;
+            }
+
+            .footer-text {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 1.5em;
+            }
+
+            .coffee-bean {
+                width: 10px;
+                height: 15px;
+            }
+
+            .footer-text {
+                font-size: 0.8em;
+            }
+
+            .social-icons {
+                flex-direction: column;
+            }
+
+            .social-text {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="design-container">
+        <div class="background-elements"></div>
+        <div class="overlay"></div>
+        <div class="content">
+            <img src="icon.png" alt="Travellers Coffee Logo" class="logo">
+            <h1 class="tagline">ЕШЬ ПРАВИЛЬНО<span>ПУТЕШЕСТВУЙ ЧАСТО</span></h1>
+            <div class="social-icons">
+                <a href="#" target="_blank"><div class="social-icon twitter-icon"></div></a>
+                <a href="#" target="_blank"><div class="social-icon facebook-icon"></div></a>
+                <a href="#" target="_blank"><div class="social-icon instagram-icon"></div></a>
+                <div class="social-text">/travellers coffee</div>
+            </div>
+        </div>
+        <div class="footer-text">
+            ВСЕ НАЛОГИ ВКЛЮЧЕНЫ В НАШИ ЦЕНЫ.<br>
+            Цены были обновлены в последний раз 16.01.2025.
+        </div>
+    </div>
+
+    <script>
+        function createBean() {
+            const bean = document.createElement('div');
+            bean.classList.add('coffee-bean');
+            bean.style.left = Math.random() * window.innerWidth + 'px';
+            document.querySelector('.design-container').appendChild(bean);
+
+            bean.addEventListener('animationend', () => {
+                bean.remove();
+            });
+        }
+
+        setInterval(createBean, Math.random() * 1000 + 1000);
+    </script>
+</body>
+</html>
