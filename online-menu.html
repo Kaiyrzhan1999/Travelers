@@ -12,7 +12,6 @@
             height: 100%;
             font-family: 'Roboto', sans-serif;
             background-color: black;
-            overflow: hidden;
         }
         .modal {
             position: fixed;
@@ -28,7 +27,8 @@
         .modal-content {
             flex-grow: 1;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .close-btn {
             position: fixed;
@@ -43,15 +43,9 @@
             z-index: 1001;
             padding: 10px;
         }
-        #pdfContainer {
-            width: 100%;
-            height: 100%;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
-        #pdfViewer {
-            width: 100%;
-            height: auto;
+        #pdfCanvas {
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -59,34 +53,55 @@
     <div id="menuModal" class="modal">
         <button class="close-btn" onclick="goToIndex()">&times;</button>
         <div class="modal-content">
-            <div id="pdfContainer">
-                <embed id="pdfViewer" src="TRAVELERS COFFEE MENU KAZ-RUS 2025.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
-            </div>
+            <canvas id="pdfCanvas"></canvas>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
     <script>
         function goToIndex() {
             window.location.href = 'index.html';
         }
 
-        function adjustPdfSize() {
-            var container = document.getElementById('pdfContainer');
-            var viewer = document.getElementById('pdfViewer');
-            container.style.height = window.innerHeight + 'px';
-            viewer.style.width = window.innerWidth + 'px';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
+
+        const url = 'TRAVELERS COFFEE MENU KAZ-RUS 2025.pdf';
+        const canvas = document.getElementById('pdfCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let scale = 1.0;
+
+        function renderPage(num) {
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                page.render(renderContext);
+            });
         }
 
-        window.addEventListener('resize', adjustPdfSize);
-        window.addEventListener('orientationchange', adjustPdfSize);
-        window.addEventListener('load', adjustPdfSize);
+        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            renderPage(pageNum);
+        });
 
-        // Предотвращение зума на мобильных устройствах
-        document.addEventListener('touchmove', function (event) {
-            if (event.scale !== 1) {
-                event.preventDefault();
-            }
-        }, { passive: false });
+        function adjustScale() {
+            const modalContent = document.querySelector('.modal-content');
+            const viewportWidth = modalContent.clientWidth;
+            scale = (viewportWidth - 20) / 595; // 595 - стандартная ширина страницы A4 в PDF
+            renderPage(pageNum);
+        }
+
+        window.addEventListener('resize', adjustScale);
+        window.addEventListener('orientationchange', adjustScale);
+        window.addEventListener('load', adjustScale);
     </script>
 </body>
 </html>
