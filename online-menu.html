@@ -23,12 +23,10 @@
             height: 100%;
             background-color: black;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
         }
         .modal-content {
-            width: 100%;
-            height: 100%;
+            flex-grow: 1;
             position: relative;
             overflow: hidden;
         }
@@ -45,12 +43,15 @@
             z-index: 1001;
             padding: 10px;
         }
-        #pdfViewer {
+        #pdfContainer {
             width: 100%;
             height: 100%;
-            border: none;
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
+        }
+        #pdfViewer {
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -58,7 +59,9 @@
     <div id="menuModal" class="modal">
         <button class="close-btn" onclick="goToIndex()">&times;</button>
         <div class="modal-content">
-            <iframe id="pdfViewer" src="TRAVELERS COFFEE MENU KAZ-RUS 2025.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" frameborder="0"></iframe>
+            <div id="pdfContainer">
+                <embed id="pdfViewer" src="TRAVELERS COFFEE MENU KAZ-RUS 2025.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">
+            </div>
         </div>
     </div>
 
@@ -67,15 +70,16 @@
             window.location.href = 'index.html';
         }
 
-        function adjustIframeSize() {
-            var iframe = document.getElementById('pdfViewer');
-            iframe.style.width = window.innerWidth + 'px';
-            iframe.style.height = window.innerHeight + 'px';
+        function adjustPdfSize() {
+            var container = document.getElementById('pdfContainer');
+            var viewer = document.getElementById('pdfViewer');
+            container.style.height = window.innerHeight + 'px';
+            viewer.style.width = window.innerWidth + 'px';
         }
 
-        window.addEventListener('resize', adjustIframeSize);
-        window.addEventListener('orientationchange', adjustIframeSize);
-        window.addEventListener('load', adjustIframeSize);
+        window.addEventListener('resize', adjustPdfSize);
+        window.addEventListener('orientationchange', adjustPdfSize);
+        window.addEventListener('load', adjustPdfSize);
 
         // Предотвращение зума на мобильных устройствах
         document.addEventListener('touchmove', function (event) {
