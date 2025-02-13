@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контактная информация</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         body, html {
             margin: 0;
@@ -28,7 +27,7 @@
             background-size: 20%;
             background-position: center;
             background-repeat: repeat;
-            height: 3rem;
+            height: 3cm;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,14 +51,14 @@
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 24px;
             cursor: pointer;
             padding: 10px;
             z-index: 10;
         }
 
         .logo {
-            height: 3rem;
+            height: 3cm;
             width: auto;
             position: relative;
             z-index: 1;
@@ -133,14 +132,6 @@
         }
 
         @media (min-width: 768px) {
-            .top-panel {
-                height: 4rem;
-            }
-
-            .logo {
-                height: 3.5rem;
-            }
-
             .main-text {
                 font-size: 1.5rem;
             }
@@ -188,21 +179,12 @@
                 return;
             }
 
-            const reason = localStorage.getItem('selectedReason') || 'Не указана';
-            const comment = localStorage.getItem('userComment') || 'Нет комментария';
+            // Сохраняем введенные данные в localStorage
+            localStorage.setItem('userMobile', mobile);
+            localStorage.setItem('userName', name);
 
-            const message = `Новый отзыв:\nПричина: ${reason}\nКомментарий: ${comment}\nИмя: ${name}\nТелефон: ${mobile}`;
-
-            axios.post('http://localhost:3000/send-notification', { message: message })
-                .then(function (response) {
-                    console.log('Уведомление отправлено:', response.data);
-                    // Переход на страницу благодарности после успешной отправки
-                    window.location.href = 'feedback_thank_you.html';
-                })
-                .catch(function (error) {
-                    console.error('Ошибка при отправке уведомления:', error);
-                    alert('Произошла ошибка при отправке отзыва. Пожалуйста, попробуйте еще раз.');
-                });
+            // Переход на страницу благодарности
+            window.location.href = 'feedback_thank_you.html';
         }
     </script>
 </body>
