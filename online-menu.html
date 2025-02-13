@@ -12,6 +12,7 @@
             height: 100%;
             font-family: 'Roboto', sans-serif;
             background-color: black;
+            overflow-x: hidden;
         }
         .modal {
             position: fixed;
@@ -26,9 +27,10 @@
         }
         .modal-content {
             flex-grow: 1;
-            position: relative;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            padding: 10px;
+            box-sizing: border-box;
         }
         .close-btn {
             position: fixed;
@@ -43,65 +45,49 @@
             z-index: 1001;
             padding: 10px;
         }
-        #pdfCanvas {
+        .menu-image {
+            width: 100%;
+            height: auto;
             display: block;
-            margin: 0 auto;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div id="menuModal" class="modal">
         <button class="close-btn" onclick="goToIndex()">&times;</button>
-        <div class="modal-content">
-            <canvas id="pdfCanvas"></canvas>
+        <div class="modal-content" id="imageContainer">
+            <!-- Изображения будут добавлены здесь с помощью JavaScript -->
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
     <script>
         function goToIndex() {
             window.location.href = 'index.html';
         }
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
+        const imageContainer = document.getElementById('imageContainer');
+        const imageCount = 13; // Общее количество изображений
 
-        const url = 'TRAVELERS COFFEE MENU KAZ-RUS 2025.pdf';
-        const canvas = document.getElementById('pdfCanvas');
-        const ctx = canvas.getContext('2d');
+        for (let i = 1; i <= imageCount; i++) {
+            const img = document.createElement('img');
+            img.src = `TRAVELERS COFFEE MENU KAZ-RUS 2025_page-${String(i).padStart(4, '0')}.jpg`;
+            img.alt = `Menu page ${i}`;
+            img.className = 'menu-image';
+            imageContainer.appendChild(img);
+        }
 
-        let pdfDoc = null;
-        let pageNum = 1;
-        let scale = 1.0;
-
-        function renderPage(num) {
-            pdfDoc.getPage(num).then(function(page) {
-                const viewport = page.getViewport({ scale: scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-                page.render(renderContext);
+        function adjustImageSize() {
+            const images = document.querySelectorAll('.menu-image');
+            const viewportWidth = window.innerWidth - 20; // Учитываем отступы
+            images.forEach(img => {
+                img.style.width = `${viewportWidth}px`;
             });
         }
 
-        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-            pdfDoc = pdfDoc_;
-            renderPage(pageNum);
-        });
-
-        function adjustScale() {
-            const modalContent = document.querySelector('.modal-content');
-            const viewportWidth = modalContent.clientWidth;
-            scale = (viewportWidth - 20) / 595; // 595 - стандартная ширина страницы A4 в PDF
-            renderPage(pageNum);
-        }
-
-        window.addEventListener('resize', adjustScale);
-        window.addEventListener('orientationchange', adjustScale);
-        window.addEventListener('load', adjustScale);
+        window.addEventListener('resize', adjustImageSize);
+        window.addEventListener('orientationchange', adjustImageSize);
+        window.addEventListener('load', adjustImageSize);
     </script>
 </body>
 </html>
