@@ -64,21 +64,22 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding-top: 3cm;
+            padding-top: 1cm; /* Changed from 3cm to 1cm */
         }
         .menu {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             max-width: 1200px;
+            margin-top: -1cm; /* Added 0.2cm margin from the divider */
         }
         .menu-item {
             width: 5cm;
             height: 5cm;
-            margin: 10px;
+            margin: 20px;
             background-color: #333;
             color: white;
-            border-radius: 10px;
+            border-radius: 20px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -112,7 +113,7 @@
             text-transform: uppercase;
             padding: 10px;
             font-size: 14px;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
             width: 100%;
