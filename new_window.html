@@ -82,7 +82,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 60px;
+            font-size: 100px;
             color: gray;
             transition: all 0.3s ease;
             position: relative;
@@ -162,7 +162,7 @@
 
         @media (max-width: 600px) {
             .smiley {
-                font-size: 40px;
+                font-size: 50px;
             }
             .rate-button {
                 font-size: 20px;
@@ -198,13 +198,13 @@
         </div>
         <button class="rate-button" disabled onclick="openFeedbackWindow()">Оценить</button>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const smileys = document.querySelectorAll('.smiley');
-            const rateButton = document.querySelector('.rate-button');
-            const ratingText = document.getElementById('rating-text');
-            const backButton = document.getElementById('backButton');
-            let selectedRating = null;
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const smileys = document.querySelectorAll('.smiley');
+        const rateButton = document.querySelector('.rate-button');
+        const ratingText = document.getElementById('rating-text');
+        const backButton = document.getElementById('backButton');
+        let selectedRating = null;
 
             const ratingTexts = {
                 1: "Плохо",
@@ -243,18 +243,25 @@
                 });
             });
 
-            backButton.addEventListener('click', function() {
-                window.close();
-            });
+        rateButton.addEventListener('click', function() {
+            openFeedbackWindow();
         });
 
-        function openFeedbackWindow() {
-            const selectedRating = document.querySelector('.smiley.active')?.dataset.rating;
-            if (selectedRating) {
-                localStorage.setItem('selectedRating', selectedRating);
-            }
+        backButton.addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+    });
+
+    function openFeedbackWindow() {
+        const selectedSmiley = document.querySelector('.smiley.active');
+        if (selectedSmiley) {
+            const selectedRating = selectedSmiley.dataset.rating;
+            localStorage.setItem('selectedEmoji', selectedRating);
             window.location.href = 'feedback_window.html';
+        } else {
+            alert('Пожалуйста, выберите оценку перед продолжением.');
         }
-    </script>
+    }
+</script>
 </body>
 </html>
