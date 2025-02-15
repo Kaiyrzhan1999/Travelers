@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Супы</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+        }
+        .menu {
+            display: flex;
+            justify-content: center; /* Changed from flex-start to center */
+            align-items: center;
+            overflow-x: auto;
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-button {
+            position: absolute; /* Added to position the button */
+            left: 10px; /* Added to position the button */
+            flex: 0 0 auto;
+            width: 40px;
+            height: 40px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button::before {
+            content: '←';
+            display: inline-block;
+        }
+
+        .menu-item {
+            flex: 0 0 auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .menu-item:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .menu-item.active {
+            background-color: #0056b3;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card {
+            width: 5cm;
+            height: 5cm;
+            margin: 10px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255,255,255,0.9);
+            padding: 5px;
+            text-align: center;
+        }
+        .card-title {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .card-price {
+            font-size: 12px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            animation: slideIn 0.3s;
+            border-radius: 10px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+        #modalImage {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #modalTitle {
+            margin-top: 0;
+        }
+        #modalPrice {
+            font-weight: bold;
+            color: #007bff;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        @keyframes slideIn {
+            from {transform: translateY(-50px);}
+            to {transform: translateY(0);}
+        }
+
+        @media screen and (max-width: 600px) {
+            .back-button {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+            .card {
+                width: calc(50% - 10px);
+                height: calc(50vw - 10px);
+                max-width: 5cm;
+                max-height: 5cm;
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="location.href='menu.html'" aria-label="Назад"></button>
+    <div class="menu">
+        <button class="back-button" onclick="location.href='menu.html'" aria-label="Назад"></button>
+        <div class="menu-item active" onclick="location.href='breakfasts.html'">Завтраки</div>
+        <div class="menu-item" onclick="location.href='drinks.html'">Напитки</div>
+        <div class="menu-item" onclick="location.href='salads.html'">Салаты</div>
+        <div class="menu-item" onclick="location.href='soups.html'">Супы</div>
+        <div class="menu-item" onclick="location.href='main_dishes.html'">Основные блюда</div>
+        <div class="menu-item" onclick="location.href='snacks.html'">Закуски и снеки</div>
+        <div class="menu-item" onclick="location.href='sandwiches_and_burgers.html'">Сэндвичи и бургеры</div>
+        <div class="menu-item" onclick="location.href='pizza.html'">Пицца</div>
+        <div class="menu-item" onclick="location.href='rolls.html'">Роллы</div>
+    </div>
+
+    <div class="container">
+        <div class="card" style="background-image: url('Грибной крем-суп.jpeg');" onclick="openModal('Грибной крем-суп', 'Грибной крем-суп.jpeg', '280 руб', 'Нежный крем-суп из свежих грибов')">
+            <div class="card-info">
+                <div class="card-title">Грибной крем-суп</div>
+                <div class="card-price">280 руб</div>
+            </div>
+        </div>
+        <div class="card" style="background-image: url('Куриный суп с лапшой.jpeg');" onclick="openModal('Куриный суп с лапшой', 'Куриный суп с лапшой.jpeg', '250 руб', 'Классический куриный суп с домашней лапшой')">
+            <div class="card-info">
+                <div class="card-title">Куриный суп с лапшой</div>
+                <div class="card-price">250 руб</div>
+            </div>
+        </div>
+        <div class="card" style="background-image: url('Суп-пюре из чечевицы.jpeg');" onclick="openModal('Суп-пюре из чечевицы', 'Суп-пюре из чечевицы.jpeg', '260 руб', 'Питательный суп-пюре из чечевицы с овощами')">
+            <div class="card-info">
+                <div class="card-title">Суп-пюре из чечевицы</div>
+                <div class="card-price">260 руб</div>
+            </div>
+        </div>
+        <div class="card" style="background-image: url('Сырный крем-суп.jpeg');" onclick="openModal('Сырный крем-суп', 'Сырный крем-суп.jpeg', '290 руб', 'Ароматный крем-суп из нескольких сортов сыра')">
+            <div class="card-info">
+                <div class="card-title">Сырный крем-суп</div>
+                <div class="card-price">290 руб</div>
+            </div>
+        </div>
+        <div class="card" style="background-image: url('Том-Ям.jpeg');" onclick="openModal('Том-Ям', 'Том-Ям.jpeg', '350 руб', 'Острый тайский суп Том-Ям с морепродуктами')">
+            <div class="card-info">
+                <div class="card-title">Том-Ям</div>
+                <div class="card-price">350 руб</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <h2 id="modalTitle"></h2>
+            <p id="modalPrice"></p>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, image, price, description) {
+            var modal = document.getElementById("myModal");
+            var modalTitle = document.getElementById("modalTitle");
+            var modalImage = document.getElementById("modalImage");
+            var modalPrice = document.getElementById("modalPrice");
+            var modalDescription = document.getElementById("modalDescription");
+
+            modalTitle.textContent = title;
+            modalImage.src = image;
+            modalImage.alt = title;
+            modalPrice.textContent = "Цена: " + price;
+            modalDescription.textContent = description;
+
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
