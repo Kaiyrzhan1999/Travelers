@@ -27,7 +27,7 @@
             background-size: 20%;
             background-position: center;
             background-repeat: repeat;
-            height: 3rem;
+            height: 3cm;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -51,14 +51,13 @@
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 24px;
             cursor: pointer;
-            padding: 10px;
-            z-index: 10;
+            z-index: 1;
         }
 
         .logo {
-            height: 3rem;
+            height: 3cm;
             width: auto;
             position: relative;
             z-index: 1;
@@ -124,27 +123,17 @@
             transform: scale(0.98);
         }
 
-        @media (min-width: 768px) {
-            .top-panel {
-                height: 4rem;
-            }
-
-            .logo {
-                height: 3.5rem;
-            }
-
+        @media (max-width: 600px) {
             .main-text {
-                font-size: 1.8rem;
-            }
-
-            .comment-box {
-                height: 200px;
                 font-size: 1.1rem;
             }
 
+            .comment-box {
+                font-size: 0.9rem;
+            }
+
             .continue-btn {
-                height: 3.5rem;
-                font-size: 1.3rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -168,16 +157,22 @@
 
         function saveCommentAndContinue() {
             const comment = document.getElementById('commentText').value;
-            localStorage.setItem('userComment', comment);
+            localStorage.setItem('feedbackComment', comment);
             window.location.href = 'feedback_contact.html';
         }
 
         // Восстановление комментария при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            const savedComment = localStorage.getItem('userComment');
+            const savedComment = localStorage.getItem('feedbackComment');
             if (savedComment) {
                 document.getElementById('commentText').value = savedComment;
             }
+
+// Добавьте это на страницы feedback_reason.html и feedback_comment.html
+window.onload = function() {
+    console.log('Page loaded. Current localStorage:', localStorage);
+}
+
         });
     </script>
 </body>
