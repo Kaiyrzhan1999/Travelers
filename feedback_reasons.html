@@ -72,10 +72,12 @@
             overflow-y: auto;
         }
 
+
         .main-text {
-            font-size: 28px;
+            font-size: 0.8cm;
             text-align: center;
             margin-bottom: 1cm;
+            color: #333;
         }
 
         .buttons-container {
@@ -148,9 +150,17 @@
         }
 
         function openFeedbackComment(reason) {
-            localStorage.setItem('selectedReason', reason);
+            // Сохраняем выбранную причину в localStorage
+            localStorage.setItem('feedbackReason', reason);
+            // Переходим на страницу комментария
             window.location.href = 'feedback_comment.html';
         }
+
+// Добавьте это на страницы feedback_reason.html и feedback_comment.html
+window.onload = function() {
+    console.log('Page loaded. Current localStorage:', localStorage);
+}
+
     </script>
 </body>
 </html>
