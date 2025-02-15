@@ -55,19 +55,80 @@
             position: relative;
             z-index: 1;
         }
-        .content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
+    .content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        justify-content: flex-start; /* Изменено с space-between на flex-start */
+    }
         .message {
             font-size: 18px;
             line-height: 1.5;
-            margin-bottom: 1cm;
+            margin-bottom: 20px;
         }
+    .social-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: -0cm; /* Добавлено отрицательное значение margin-top */
+    }
+    .social-button {
+        width: 8cm;
+        height: 1.5cm;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .social-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: all 0.5s;
+    }
+
+    .social-button:hover::before {
+        left: 100%;
+    }
+
+    .social-button img {
+        height: 70%;
+        margin-right: 10px;
+    }
+
+    .social-button span {
+        color: white;
+        font-weight: bold;
+    }
+
+    .social-button.gis {
+        background-color: #4CAF50; /* Зеленый цвет 2GIS */
+    }
+
+    .social-button.gis:hover {
+        background-color: #45a049; /* Немного темнее при наведении */
+    }
+
+    .social-button.instagram {
+        background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    }
+
+    .social-button.tiktok {
+        background-color: #000000;
+    }
         .ok-button {
             background-color: #4CAF50;
             color: white;
@@ -79,33 +140,16 @@
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
-            width: 10cm;
+            width: 80%;
+            max-width: 300px;
             margin: 0 auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 16cm; /* 5см от нижнего края */
-        }
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 12cm; /* 5см выше кнопки "Хорошо" */
-        }
-        .social-icon {
-            font-size: 30px;
-            color: #4CAF50;
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="top-panel">
-            <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
             <img src="icon.png" alt="Логотип" class="logo">
         </div>
         <div class="content">
@@ -114,16 +158,39 @@
                 <p>Пожалуйста, дайте нам знать, как все прошло в следующий раз.</p>
                 <p>Спасибо, что помогаете нам улучшить качество обслуживания клиентов.</p>
             </div>
-            <button class="ok-button" onclick="openIndexPage()">Хорошо</button>
-            <div class="social-icons">
-                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fas fa-map-marker-alt"></i></a>
-            </div>
+<div class="social-buttons">
+    <button class="social-button gis" onclick="openSocialLink('2gis')">
+        <img src="png-klev-club-yozi-p-2-gis-logotip-png-6.png" alt="2GIS">
+        <span>2GIS</span>
+    </button>
+    <button class="social-button instagram" onclick="openSocialLink('instagram')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="Instagram">
+        <span>Instagram</span>
+    </button>
+    <button class="social-button tiktok" onclick="openSocialLink('tiktok')">
+        <img src="https://sf-tb-sg.ibytedtos.com/obj/eden-sg/uhtyvueh7nulogpoguhm/tiktok-icon2.png" alt="TikTok">
+        <span>TikTok</span>
+    </button>
+            <button class="ok-button" onclick="openIndexPage()">На главную</button>
         </div>
     </div>
     <script>
+        function goBack() {
+            window.location.href = 'feedback_contact.html';
+        }
+
         function openIndexPage() {
             window.location.href = 'index.html';
+        }
+
+        function openSocialLink(platform) {
+            // Здесь вы можете добавить соответствующие URL для каждой платформы
+            const urls = {
+                '2gis': 'https://2gis.ru/your-page',
+                'instagram': 'https://www.instagram.com/your-page',
+                'tiktok': 'https://www.tiktok.com/@your-page'
+            };
+            window.open(urls[platform], '_blank');
         }
     </script>
 </body>
