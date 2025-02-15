@@ -167,25 +167,74 @@
     </div>
     <script>
         function goBack() {
-            window.history.back();
+            window.location.href = 'feedback_comment.html';
         }
 
-        function submitFeedback() {
-            const mobile = document.getElementById('mobileInput').value;
-            const name = document.getElementById('nameInput').value;
+    function submitFeedback() {
+        const mobileNumber = document.getElementById('mobileInput').value;
+        const name = document.getElementById('nameInput').value;
+        const contactInfo = `${name} - ${mobileNumber}`;
+        localStorage.setItem('contactInfo', contactInfo);
+        console.log('Contact info saved:', contactInfo); // Добавлено логирование
+        sendFeedbackToTelegram();
+    }
 
-            if (!mobile || !name) {
-                alert('Пожалуйста, заполните все поля');
-                return;
-            }
+    function sendFeedbackToTelegram() {
+        const tableNumber = localStorage.getItem('tableNumber');
+        const feedbackReason = localStorage.getItem('feedbackReason');
+        const feedbackComment = localStorage.getItem('feedbackComment');
+        const contactInfo = localStorage.getItem('contactInfo');
 
-            // Сохраняем введенные данные в localStorage
-            localStorage.setItem('userMobile', mobile);
-            localStorage.setItem('userName', name);
+        console.log('Retrieved data:', { tableNumber, feedbackReason, feedbackComment, contactInfo }); // Добавлено логирование
 
-            // Переход на страницу благодарности
+        // Проверка наличия данных
+        if (!tableNumber && !feedbackReason && !feedbackComment && !contactInfo) {
+            console.error('No data found in localStorage');
+            alert('Ошибка: Данные отзыва не найдены. Пожалуйста, заполните форму заново.');
+            window.location.href = 'feedback_reason.html'; // Перенаправление на начальную страницу
+            return;
+        }
+
+        const [name, phone] = (contactInfo || '- -').split(' - ');
+
+        const message = `
+Новый отзыв!
+
+Имя: ${name || 'Не указано'}
+Телефон: ${phone || 'Не указано'}
+
+Столик: ${tableNumber || 'Не указано'}
+Причина: ${feedbackReason || 'Не указано'}
+Отзыв: ${feedbackComment || 'Не указано'}
+        `;
+
+        console.log('Message to be sent:', message); // Добавлено логирование
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzP6_l-GnFk4zd1FhUIwnnz1IRDQZVnpiM_3Dc-gV3hObGmWqrwF01DDtbH2nFZ63TO/exec';
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => {
+            console.log('Success!', response);
+            localStorage.clear();
             window.location.href = 'feedback_thank_you.html';
-        }
-    </script>
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('Произошла ошибка при отправке отзыва. Пожалуйста, попробуйте еще раз.');
+        });
+    }
+
+    // Добавим проверку при загрузке страницы
+    window.onload = function() {
+        console.log('Page loaded. Current localStorage:', localStorage);
+    }
+</script>
 </body>
 </html>
